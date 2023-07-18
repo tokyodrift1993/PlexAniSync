@@ -31,14 +31,13 @@ jobs:
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "IMAGE_NAMES<<$EOF" >> $GITHUB_ENV
           if [[ ${{ github.ref }} == *"refs/tags/"* ]] || [[ ${{ github.ref }} == "refs/heads/master" ]]; then
-            DOCKER_IO=true
-            echo "${{ inputs.imagename }}" >> $GITHUB_ENV
+            if [[ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]]  ; then
+              echo "DOCKER_IO=true" >> $GITHUB_ENV
+              echo "${{ inputs.imagename }}" >> $GITHUB_ENV
+            fi
           fi
           echo "ghcr.io/${{ inputs.imagename }}" >> $GITHUB_ENV
           echo "$EOF" >> $GITHUB_ENV
-          if [[ -n "$DOCKER_IO" ]] && [[ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]]  ; then
-            echo "DOCKER_IO=true" >> $GITHUB_ENV
-          fi
 
           if [[ ${{ inputs.eventname }} == 'pull_request' ]]; then
             echo "PLATFORMS=linux/amd64" >> $GITHUB_ENV
