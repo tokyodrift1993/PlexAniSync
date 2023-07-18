@@ -36,7 +36,7 @@ jobs:
           fi
           echo "ghcr.io/${{ inputs.imagename }}" >> $GITHUB_ENV
           echo "$EOF" >> $GITHUB_ENV
-          if [[ -n "$DOCKER_IO" ]]; then
+          if [[ -n "$DOCKER_IO" ]] && [[ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]]  ; then
             echo "DOCKER_IO=true" >> $GITHUB_ENV
           fi
 
