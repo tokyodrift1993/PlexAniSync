@@ -1,6 +1,6 @@
 name: Build and Push Docker Image to docker.com and ghcr.io
 
-on: 
+on:
   workflow_call:
     inputs:
       dockerfile:
@@ -24,8 +24,8 @@ jobs:
       packages: write
 
     steps:
-        # Set IMAGE_NAMES to ghcr.io, additionally add docker.io if building a tag or master
-        # Limit platforms to amd64 if building for pull requests
+      # Set IMAGE_NAMES to ghcr.io, additionally add docker.io if building a tag or master
+      # Limit platforms to amd64 if building for pull requests
       - name: Set variables
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
